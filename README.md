@@ -11,11 +11,11 @@
 ## Установка:
 
 ```sh
-$ npm install
+$ make setup
 ```
 
 ## Запуск:
 
 ```sh
-$ npm run dev
+$ make start
 ```
