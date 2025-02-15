@@ -1,5 +1,5 @@
 import { RegisterLayout } from './RegisterLayout';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const REGEX_EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const REGEX_PASSWORD = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -48,44 +48,49 @@ export const RegisterContainer = () => {
 	const { errorMail, errorPassword, errorPasswordRepeat } = getError();
 
 	const [isValid, setIsValid] = useState(false);
+	const focusRef = useRef(null);
 
 	const validateRegister = targetName => {
-		let valid = true;
+		const validMail = REGEX_EMAIL.test(email);
+		const validPassword = REGEX_PASSWORD.test(password);
+		const validPasswordRepeat = password === passwordRepeat;
 
 		if (targetName === 'email') {
-			if (!REGEX_EMAIL.test(email)) {
+			if (!validMail) {
 				updateError(
 					'errorMail',
 					'Введите корректный email (например, example@mail.com)'
 				);
-				valid = false;
 			} else {
 				updateError('errorMail', '');
 			}
 		}
 
 		if (targetName === 'password') {
-			if (!REGEX_PASSWORD.test(password)) {
+			if (!validPassword) {
 				updateError(
 					'errorPassword',
 					'Пароль должен содержать минимум 8 символов, хотя бы одну букву и одну цифру.'
 				);
-				valid = false;
 			} else {
 				updateError('errorPassword', '');
 			}
 		}
 
 		if (targetName === 'passwordRepeat') {
-			if (password !== passwordRepeat) {
+			if (!validPasswordRepeat) {
 				updateError('errorPasswordRepeat', 'Пароли не совпадают.');
-				valid = false;
 			} else {
 				updateError('errorPasswordRepeat', '');
 			}
 		}
 
-		setIsValid(valid);
+		if (validMail && validPassword && validPasswordRepeat) {
+			setIsValid(true);
+			focusRef.current.focus();
+		} else {
+			setIsValid(false);
+		}
 	};
 
 	const onChangeRegister = (targetName, value) => {
@@ -101,9 +106,8 @@ export const RegisterContainer = () => {
 		console.log('Форма отправлена!', getState());
 		resetState();
 		resetError();
+		setIsValid(false);
 	};
-
-	const isCheckState = !email || !password || !passwordRepeat;
 
 	return (
 		<RegisterLayout
@@ -117,7 +121,7 @@ export const RegisterContainer = () => {
 			errorPassword={errorPassword}
 			errorPasswordRepeat={errorPasswordRepeat}
 			isValid={isValid}
-			isCheckState={isCheckState}
+			focusRef={focusRef}
 		/>
 	);
 };

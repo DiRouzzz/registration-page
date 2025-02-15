@@ -31,7 +31,7 @@ export const RegisterContainerYup = () => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors, isValid },
 		reset,
 	} = useForm({
 		defaultValues: {
@@ -40,6 +40,7 @@ export const RegisterContainerYup = () => {
 			passwordRepeat: '',
 		},
 		resolver: yupResolver(fieldsSchema),
+		mode: 'onChange',
 	});
 
 	const sendFormData = formData => {
@@ -47,14 +48,19 @@ export const RegisterContainerYup = () => {
 		reset();
 	};
 
+	const emailErrors = errors.email?.message;
+	const passwordErrors = errors.password?.message;
+	const passwordRepeatErrors = errors.passwordRepeat?.message;
+
 	return (
 		<RegisterLayoutYup
-			emailErrors={errors.email?.message}
-			passwordErrors={errors.password?.message}
-			passwordRepeatErrors={errors.passwordRepeat?.message}
+			emailErrors={emailErrors}
+			passwordErrors={passwordErrors}
+			passwordRepeatErrors={passwordRepeatErrors}
 			register={register}
 			handleSubmit={handleSubmit}
 			onSubmit={sendFormData}
+			isValid={isValid}
 		/>
 	);
 };

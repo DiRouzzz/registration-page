@@ -11,7 +11,7 @@ export const RegisterLayout = ({
 	errorPassword,
 	errorPasswordRepeat,
 	isValid,
-	isCheckState,
+	focusRef,
 }) => {
 	return (
 		<>
@@ -75,9 +75,10 @@ export const RegisterLayout = ({
 					</div>
 
 					<button
+						ref={focusRef}
 						type='submit'
-						className={styles.btn}
-						disabled={!isValid || isCheckState}>
+						className={`${styles.btn} ${isValid ? styles.valid : ''}`}
+						disabled={!isValid}>
 						Зарегистрироваться
 					</button>
 				</form>

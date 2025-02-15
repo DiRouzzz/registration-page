@@ -7,6 +7,7 @@ export const RegisterLayoutYup = ({
 	passwordRepeatErrors,
 	handleSubmit,
 	onSubmit,
+	isValid,
 }) => {
 	return (
 		<>
@@ -52,7 +53,7 @@ export const RegisterLayoutYup = ({
 							<div className={styles.errorLabel}>{passwordRepeatErrors}</div>
 						)}
 					</div>
-					<button type='submit' className={styles.btn}>
+					<button type='submit' className={`${styles.btn} ${isValid ? styles.valid : ''}`}>
 						Зарегистрироваться
 					</button>
 				</form>

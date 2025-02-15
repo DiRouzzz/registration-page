@@ -5,7 +5,7 @@ import { RegisterContainerYup } from './Components/ReactHookFormYup/RegisterCont
 
 createRoot(document.getElementById('root')).render(
 	<StrictMode>
-		{/* <RegisterContainerYup /> */}
-    <RegisterContainer />
+		<RegisterContainerYup />
+    {/* <RegisterContainer /> */}
 	</StrictMode>
 );
