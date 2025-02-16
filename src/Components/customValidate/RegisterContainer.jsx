@@ -48,7 +48,7 @@ export const RegisterContainer = () => {
 	const { errorMail, errorPassword, errorPasswordRepeat } = getError();
 
 	const [isValid, setIsValid] = useState(false);
-	const focusRef = useRef(null);
+	const buttonRef = useRef(null);
 
 	const validateRegister = targetName => {
 		const validMail = REGEX_EMAIL.test(email);
@@ -85,12 +85,8 @@ export const RegisterContainer = () => {
 			}
 		}
 
-		if (validMail && validPassword && validPasswordRepeat) {
-			setIsValid(true);
-			focusRef.current.focus();
-		} else {
-			setIsValid(false);
-		}
+		const allValid = validMail && validPassword && validPasswordRepeat;
+		setIsValid(allValid);
 	};
 
 	const onChangeRegister = (targetName, value) => {
@@ -121,7 +117,6 @@ export const RegisterContainer = () => {
 			errorPassword={errorPassword}
 			errorPasswordRepeat={errorPasswordRepeat}
 			isValid={isValid}
-			focusRef={focusRef}
 		/>
 	);
 };

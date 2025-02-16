@@ -11,7 +11,7 @@ export const RegisterLayout = ({
 	errorPassword,
 	errorPasswordRepeat,
 	isValid,
-	focusRef,
+	buttonRef,
 }) => {
 	return (
 		<>
@@ -75,7 +75,6 @@ export const RegisterLayout = ({
 					</div>
 
 					<button
-						ref={focusRef}
 						type='submit'
 						className={`${styles.btn} ${isValid ? styles.valid : ''}`}
 						disabled={!isValid}>
